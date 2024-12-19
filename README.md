@@ -11,7 +11,8 @@ description: https://tryhackme.com/r/room/dreaming
 #### We will focus on applying Multiple techniques as Enumeration, Vulnerability Hunting as well as misconfigurations exploit.
 
 {% hint style="info" %}
-This writeup is done on a Kali Linux Virtual Machine with tools up to date at 19/12/2024
+This writeup is done on a Kali Linux Virtual Machine with tools up to date at 19/12/2024\
+Follow My Cyber Website for more infos about cyber: [https://seculture.gitbook.io/hack-it/](https://seculture.gitbook.io/hack-it/)
 {% endhint %}
 
 <figure><img src=".gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>

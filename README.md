@@ -502,7 +502,7 @@ let's try it:
 
 <figure><img src=".gitbook/assets/image (21).png" alt=""><figcaption></figcaption></figure>
 
-Let's see what Databases we can see using SQL language
+Let's see what Databases we can see using SQL language. If you want to read more about SQL queries, there is a link provided in [#reference-links](./#reference-links "mention")
 
 ```sql
 SHOW DATABASES;

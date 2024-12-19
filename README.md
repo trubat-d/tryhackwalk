@@ -6,7 +6,7 @@ description: https://tryhackme.com/r/room/dreaming
 
 <figure><img src=".gitbook/assets/image (38).png" alt=""><figcaption></figcaption></figure>
 
-### Welcome to Walktrough of the Dreaming room.&#x20;
+### Welcome to Walktrough of the Dreaming room.
 
 #### We will focus on applying Multiple techniques as Enumeration, Vulnerability Hunting as well as misconfigurations exploit.
 
@@ -26,6 +26,15 @@ This writeup is done on a Kali Linux Virtual Machine with tools up to date at 19
 
 * Only the IP is known and will be called \<IP> in this writeup
 * Every flag has format \*\*\*{SOME\_TEXT}
+
+## Table of Content
+
+* Enumeration
+* Web Analysis
+* Service app Exploit
+* Flag 1 - Lucien, finding relevant files
+* Flag 2 - Death, Mysql Manipulation
+* Flag 3 - Morpheus, Python Library Hijacking
 
 ## 1 - First Step - Enumeration
 
@@ -58,11 +67,17 @@ From this we can retrieve those informations
 
 Now that we know there is a http server, let's see if there is something interseting so let's connect to it in our browser.
 
+```
+http://<IP>
+```
+
+
+
 <figure><img src=".gitbook/assets/image (5) (1).png" alt="" width="375"><figcaption></figcaption></figure>
 
 We are welcomed with a Ubuntu default page. Let's dig into the potential directories using `Gobuster`
 
-```
+```sh
 gobuster dir -u "http://<IP> -w /usr/share/wordlists/dirb/common.txt
 ```
 
@@ -70,7 +85,7 @@ Here we use common.txt to start searching for common possible directories
 
 <figure><img src=".gitbook/assets/image (6) (1).png" alt=""><figcaption></figcaption></figure>
 
-### Intersting directory: App
+### Interesting directory: App
 
 Let's go to this page in the browser
 
@@ -146,7 +161,7 @@ Value Used for password: `test`
 ### Important : We retrieved the body for making a brute-force POST attack on this page
 
 ```
-cont1=test$bogus=&submit=Log+in
+cont1=test&bogus=&submit=Log+in
 ```
 
 {% hint style="info" %}
@@ -164,7 +179,7 @@ Let's use a wordlist with only 1 value "test" to check for incorrect page size.
 
 {% code overflow="wrap" %}
 ```sh
-fffuf -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "cont1=FUZZ&bogus=&submit=Log+in" -w <WORDLIST> -u http://<IP>/app/pluck-4.7.13/login.php
+ffuf -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "cont1=FUZZ&bogus=&submit=Log+in" -w <WORDLIST> -u http://<IP>/app/pluck-4.7.13/login.php
 ```
 {% endcode %}
 
@@ -174,7 +189,7 @@ Replace IP and Wordlist with your values
 
 We can see that Invalid password page size is `1289`&#x20;
 
-Let's filter that with `-fs 1289` and see what it gives us. We will also switch to the rockyou wordlist located at `/usr/share/wordlists/rockyou.txt` .
+Let's filter that with `-fs 1289` and see what it gives us. We will also switch to the rockyou wordlist located at `/usr/share/wordlists/rockyou.txt`  in our machine.
 
 {% code overflow="wrap" %}
 ```sh
@@ -198,7 +213,7 @@ Let's see what is on that page. We enter "password" in the login and get access 
 
 There we go, we have access to the dashboard.&#x20;
 
-#### Now we have successfully authenticated. It means that any exploit that needed authentication can now potentially be used. Let's see if we can pop a reverse shell in this machine.
+#### Now we have successfully authenticated. It means that any exploit that needed authentication can now potentially be used. Let's see if we can make use of a reverse shell in this machine.
 
 ## 3- Exploiting Pluck
 
@@ -226,7 +241,7 @@ We can then use our parameters and the pluckcmspath which is the url path to plu
 
 `/app/pluck-4.7.13`
 
-```
+```sh
 python3 <exploit_file_name> <IP> 80 password /app/pluck-4.7.13
 ```
 
@@ -238,7 +253,8 @@ Let's access that page link and see what we got.
 
 <figure><img src=".gitbook/assets/image (30) (1).png" alt=""><figcaption></figcaption></figure>
 
-We got a p0wny@shell. We can actually execute linux commands inside of it so let's do a quick reverse shell with reverse shell generator and conect to a terminal instead of that web shell.
+We got a p0wny@shell. We can actually execute linux commands inside of it so let's do a quick reverse shell with reverse shell generator and connect to a terminal instead of that web shell.\
+If you don't know how to generate a reverse shell, go to the references at the bottom of the page.
 
 {% embed url="https://www.revshells.com/" %}
 
@@ -738,3 +754,16 @@ cat /home/morpheus/morpheus_flag.txt
 
 <figure><img src=".gitbook/assets/image (39).png" alt=""><figcaption></figcaption></figure>
 
+## Reference links
+
+* How to generate Reverse shells : \
+  [https://www.hackingarticles.in/easy-way-to-generate-reverse-shell/](https://www.hackingarticles.in/easy-way-to-generate-reverse-shell/)
+* Online Reverse shell generator : \
+  [https://www.revshells.com/](https://www.revshells.com/)
+* Exploit-DB Pluck 4.7.13 exploit :\
+  [https://www.exploit-db.com/exploits/49909](https://www.exploit-db.com/exploits/49909)
+* Add a value to SQL Table :\
+  [https://www.freecodecamp.org/news/insert-into-sql-how-to-insert-into-a-table-query-example-statement/](https://www.freecodecamp.org/news/insert-into-sql-how-to-insert-into-a-table-query-example-statement/)
+* SQL Cheatsheet : [https://media.datacamp.com/legacy/image/upload/v1714149594/Marketing/Blog/SQL\_for\_Data\_Science.pdf](https://media.datacamp.com/legacy/image/upload/v1714149594/Marketing/Blog/SQL_for_Data_Science.pdf)
+* Python Library Hijacking :\
+  [https://rastating.github.io/privilege-escalation-via-python-library-hijacking/](https://rastating.github.io/privilege-escalation-via-python-library-hijacking/)

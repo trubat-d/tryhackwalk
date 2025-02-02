@@ -15,7 +15,7 @@ This writeup is done on a Kali Linux Virtual Machine with tools up to date at 19
 Follow My Cyber Website for more infos about cyber: [https://seculture.gitbook.io/hack-it/](https://seculture.gitbook.io/hack-it/)
 {% endhint %}
 
-<figure><img src=".gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Here is our task.
 
@@ -45,7 +45,7 @@ With our information, the first thing to do is Enumeration of the services runni
 nmap <IP>
 ```
 
-<figure><img src=".gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We can then expand information of the services
 
@@ -53,7 +53,7 @@ We can then expand information of the services
 nmap -A -p22,80 <IP>
 ```
 
-<figure><img src=".gitbook/assets/image (4) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (4) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 From this we can retrieve those informations
 
@@ -74,7 +74,7 @@ http://<IP>
 
 
 
-<figure><img src=".gitbook/assets/image (5) (1).png" alt="" width="375"><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (5) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure>
 
 We are welcomed with a Ubuntu default page. Let's dig into the potential directories using `Gobuster`
 
@@ -84,7 +84,7 @@ gobuster dir -u "http://<IP> -w /usr/share/wordlists/dirb/common.txt
 
 Here we use common.txt to start searching for common possible directories
 
-<figure><img src=".gitbook/assets/image (6) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (6) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Interesting directory: App
 
@@ -94,7 +94,7 @@ Let's go to this page in the browser
 http://<IP>/app
 ```
 
-<figure><img src=".gitbook/assets/image (7) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (7) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We have access to a directory listing of a `pluck-4.7.13` directory. Let's click on it.\
 Our new URL is now
@@ -103,13 +103,13 @@ Our new URL is now
 http://<IP>/app/pluck-4.7.13/?file=dreaming
 ```
 
-<figure><img src=".gitbook/assets/image (8) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (8) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 What can try to see if something is hidden in source code but it doesn't look like it contains anything relevant.
 
 #### Relevant info on the page: admin button on the bottom
 
-<figure><img src=".gitbook/assets/image (9) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (9) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We can click on the `admin` button and we will be redirected to
 
@@ -117,7 +117,7 @@ We can click on the `admin` button and we will be redirected to
 http:/<IP>/app/pluck-4.7.13/login.php
 ```
 
-<figure><img src=".gitbook/assets/image (10) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (10) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We no have a password field but we don't have password.
 
@@ -140,7 +140,7 @@ On the Terminal Let's search for exploits using `searchsploit`&#x20;
 searchsploit pluck 4.7.13
 ```
 
-<figure><img src=".gitbook/assets/image (13) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (13) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We do find an exploit, Unfortunatly it is a "Authenticated" exploit which means we will need to find the password another way. But let's keep in mind if we are able to log in we could potentially make use of Remote code execution.
 
@@ -302,7 +302,7 @@ cd /home/lucien
 ls -la
 ```
 
-<figure><img src=".gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
 
 We are not lucien so we cannot open lucien\_flag.txt. None of the file that are readable as www-data seem interesting. Let's try to see if there is any file that we can read that is owned by lucien.
 
@@ -310,7 +310,7 @@ We are not lucien so we cannot open lucien\_flag.txt. None of the file that are 
 find / -type f -readable -user lucien 2>/dev/null
 ```
 
-<figure><img src=".gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (4) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Important: /opt/test.py
 
@@ -320,7 +320,7 @@ This file is not in lucien's home, let's dig into it and print its content
 cat /opt/test.py
 ```
 
-<figure><img src=".gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (5) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Important: HeyLucien#@1999!
 
@@ -337,7 +337,7 @@ ssh lucien@<IP>
 Enter password: HeyLucien#@1999!
 ```
 
-<figure><img src=".gitbook/assets/image (6).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (6) (1).png" alt=""><figcaption></figcaption></figure>
 
 We are now connected in SSH in home directory of lucien. We can now print the flag since we are connected as the owner of the file.
 
@@ -345,7 +345,7 @@ We are now connected in SSH in home directory of lucien. We can now print the fl
 cat /home/lucien/lucien_flag.txt
 ```
 
-<figure><img src=".gitbook/assets/image (8).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (8) (1).png" alt=""><figcaption></figcaption></figure>
 
 Flag is redacted here but we have now found the first flag
 
@@ -357,7 +357,7 @@ Now let's dig into the death's directory
 cd /home/death
 ```
 
-<figure><img src=".gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (9) (1).png" alt=""><figcaption></figcaption></figure>
 
 There is a getDreams.py file but we cannot read or execute it since we are lucien and not death user.\
 In the same way we cannot read the flag.
@@ -368,7 +368,7 @@ Same as before Let's see if there is any file owned by death that we can read
 find / -type f -readable -user death 2>/dev/null
 ```
 
-<figure><img src=".gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (10) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Important: /opt/getDreams.py
 
@@ -446,7 +446,7 @@ getDreams()
 * it connected to a database called `library`&#x20;
 * it then connects to the mysql with the field entered
 
-<figure><img src=".gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (13) (1).png" alt=""><figcaption></figcaption></figure>
 
 * After that it will do a query of `dreamer` and `dream` field of the `dreams` table
 
@@ -710,7 +710,7 @@ Let's search for copy2 function which is the function that has been renamed in r
 /copy2
 ```
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
 
 Let's try to add a python reverse shell code inside of this function to see if we can have a shell as Morpheus.
 
@@ -735,7 +735,7 @@ pty.spawn("sh")
 
 Once again change the attacker ip and port and input this code into the copy2 function.
 
-<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Let's save the file. Now we need to setup a new listener on attacker machine
 
@@ -745,7 +745,7 @@ nc -lvnp <ATTACKER_PORT>
 
 Now we have an automatic connection after some time since the script is run by the system user.
 
-<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 We can now cat the flag and enjoy !
 

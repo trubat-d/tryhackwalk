@@ -34,3 +34,5 @@ Here is gates with each values. (Sorry if its not the most readable)
 
 ## FLAG: ectf{100010011000}
 
+Thanks for following the writeup. Here is a link to a personal made hacking ressource:\
+[https://seculture.gitbook.io/hack-it/](https://seculture.gitbook.io/hack-it/)

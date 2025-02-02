@@ -60,3 +60,5 @@ Result is in order of y0 to y6 -> 0101011
 
 ## FLAG is : ectf{0101011}
 
+Thanks for following the writeup. Here is a link to a personal made hacking ressource:\
+[https://seculture.gitbook.io/hack-it/](https://seculture.gitbook.io/hack-it/)

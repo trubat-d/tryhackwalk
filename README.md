@@ -15,7 +15,7 @@ This writeup is done on a Kali Linux Virtual Machine with tools up to date at 19
 Follow My Cyber Website for more infos about cyber: [https://seculture.gitbook.io/hack-it/](https://seculture.gitbook.io/hack-it/)
 {% endhint %}
 
-<figure><img src=".gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Here is our task.
 
@@ -45,7 +45,7 @@ With our information, the first thing to do is Enumeration of the services runni
 nmap <IP>
 ```
 
-<figure><img src=".gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (2) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We can then expand information of the services
 
@@ -53,7 +53,7 @@ We can then expand information of the services
 nmap -A -p22,80 <IP>
 ```
 
-<figure><img src=".gitbook/assets/image (4) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (4) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 From this we can retrieve those informations
 
@@ -74,7 +74,7 @@ http://<IP>
 
 
 
-<figure><img src=".gitbook/assets/image (5) (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (5) (1) (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure>
 
 We are welcomed with a Ubuntu default page. Let's dig into the potential directories using `Gobuster`
 
@@ -302,7 +302,7 @@ cd /home/lucien
 ls -la
 ```
 
-<figure><img src=".gitbook/assets/image (3) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (3) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We are not lucien so we cannot open lucien\_flag.txt. None of the file that are readable as www-data seem interesting. Let's try to see if there is any file that we can read that is owned by lucien.
 
@@ -310,7 +310,7 @@ We are not lucien so we cannot open lucien\_flag.txt. None of the file that are 
 find / -type f -readable -user lucien 2>/dev/null
 ```
 
-<figure><img src=".gitbook/assets/image (4) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (4) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Important: /opt/test.py
 
@@ -320,7 +320,7 @@ This file is not in lucien's home, let's dig into it and print its content
 cat /opt/test.py
 ```
 
-<figure><img src=".gitbook/assets/image (5) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (5) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Important: HeyLucien#@1999!
 
@@ -735,7 +735,7 @@ pty.spawn("sh")
 
 Once again change the attacker ip and port and input this code into the copy2 function.
 
-<figure><img src=".gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Let's save the file. Now we need to setup a new listener on attacker machine
 
@@ -745,7 +745,7 @@ nc -lvnp <ATTACKER_PORT>
 
 Now we have an automatic connection after some time since the script is run by the system user.
 
-<figure><img src=".gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We can now cat the flag and enjoy !
 

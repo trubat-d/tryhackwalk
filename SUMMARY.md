@@ -12,3 +12,4 @@
     * [IT'S TRIVIAL](ctfs/ectf-2025/hardware/its-trivial.md)
 * [BITSCTF 2025](ctfs/bitsctf-2025/README.md)
   * [Baby DFIR](ctfs/bitsctf-2025/baby-dfir.md)
+  * [Baby Rev](ctfs/bitsctf-2025/baby-rev.md)
